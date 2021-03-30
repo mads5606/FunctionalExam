@@ -34,9 +34,11 @@ export const getRequest = async (server, uri) =>
 
 export const throwIfNotEmpty = async (requestPromise) => {
   const out = await requestPromise;
-  if (out.data != "") {
+  const data = JSON.parse(out.data);
+  const fileListArray = data["fileList"];
+  if (!Array.isArray(fileListArray) || fileListArray.length) {
     throw new Error(
-      `Returned non-empty Result, got: ${JSON.stringify(out.data)}`
+        `Returned non-empty Result, got: ${JSON.stringify(out.data)}`
     );
   } else {
     return true;

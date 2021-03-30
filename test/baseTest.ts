@@ -1,6 +1,5 @@
-import * as assert from "assert";
 import * as fc from "fast-check";
-import { getRequest, throwIfHttpFailed, throwIfNotEmpty } from "../src/http";
+import {getRequest, throwIfHttpFailed, throwIfNotEmpty} from "../src/http";
 
 const server = {
   host: "localhost",
@@ -16,21 +15,21 @@ describe("GET Test", () => {
         console.log(USER_ID);
         console.log(validUsers.includes(USER_ID));
         if (validUsers.includes(USER_ID)) {
-          await throwIfHttpFailed(
-            getRequest(
-              server,
-              `/file/list?userId=\${${encodeURIComponent(USER_ID)}}`
-            )
-          );
+            await throwIfHttpFailed(
+                getRequest(
+                    server,
+                    `/file/list?userId=${encodeURIComponent(USER_ID)}`
+                )
+            );
         } else {
           await throwIfNotEmpty(
             getRequest(
               server,
-              `/file/list?userId=\${${encodeURIComponent(USER_ID)}}`
+                `/file/list?userId=${encodeURIComponent(USER_ID)}`
             )
           );
         }
       }),
-      { timeout: 200 }
+        {timeout: 200, numRuns: 90}
     ));
 });

@@ -1,0 +1,10 @@
+version: "3"
+
+services:
+  orbit-filesync:
+    image: cr.orbit.dev/sdu/filesync-server:latest
+    container_name: orbit
+    ports:
+      - 8085:8085
+    environment:
+      eCLICOLOR_FORCE: 1
