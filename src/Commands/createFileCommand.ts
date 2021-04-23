@@ -1,9 +1,10 @@
-import { OrbitCommand, OrbitModel } from "./OrbitModel";
-import { IOrbit } from "../Orbit";
+import {OrbitCommand, OrbitModel} from "../OrbitModel";
+import {IOrbit} from "../Orbit";
 import * as assert from "assert";
 
 export class createFileCommand implements OrbitCommand {
-  constructor() {}
+  constructor() {
+  }
 
   check(model: OrbitModel) {
     return true;

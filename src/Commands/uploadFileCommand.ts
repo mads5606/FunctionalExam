@@ -1,9 +1,10 @@
-import { OrbitCommand, OrbitModel } from "./OrbitModel";
-import { IOrbit } from "../Orbit";
+import {OrbitCommand, OrbitModel} from "../OrbitModel";
+import {IOrbit} from "../Orbit";
 import * as assert from "assert";
 
-export class moveFileCommand implements OrbitCommand {
-  constructor() {}
+export class uploadFileCommand implements OrbitCommand {
+  constructor() {
+  }
 
   check(model: OrbitModel) {
     return true;
@@ -14,6 +15,6 @@ export class moveFileCommand implements OrbitCommand {
   }
 
   toString() {
-    return "moveFileCommand";
+    return "uploadFileCommand";
   }
 }

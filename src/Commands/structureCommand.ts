@@ -1,9 +1,10 @@
-import { OrbitCommand, OrbitModel } from "./OrbitModel";
-import { IOrbit } from "../Orbit";
+import {OrbitCommand, OrbitModel} from "../OrbitModel";
+import {IOrbit} from "../Orbit";
 import * as assert from "assert";
 
-export class listCommand implements OrbitCommand {
-  constructor() {}
+export class structureCommand implements OrbitCommand {
+  constructor() {
+  }
 
   check(model: OrbitModel) {
     return true;
@@ -14,6 +15,6 @@ export class listCommand implements OrbitCommand {
   }
 
   toString() {
-    return "listCommand";
+    return "structureCommand";
   }
 }

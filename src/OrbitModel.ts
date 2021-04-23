@@ -1,5 +1,5 @@
 import fc from "fast-check";
-import { IOrbit } from "../Orbit";
+import {IOrbit} from "./Orbit";
 
 export class OrbitModel {
   serverIsRunning = false;
