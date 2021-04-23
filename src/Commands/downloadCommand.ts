@@ -3,15 +3,18 @@ import {IOrbit} from "../Orbit";
 import * as assert from "assert";
 
 export class downloadCommand implements OrbitCommand {
-  constructor() {
+  constructor(readonly fileIndex: number) {
   }
 
   check(model: OrbitModel) {
     return true;
   }
 
-  run(model: OrbitModel, system: IOrbit) {
-    assert.strictEqual(model.validUsers, system.validUserList);
+  async run(model: OrbitModel, system: IOrbit) {
+    const file = model.files[this.fileIndex % model.files.length];
+    const out = await system.getFile(file.id);
+    assert.strictEqual(out.status, 200);
+    assert.strictEqual(out.data, file.content);
   }
 
   toString() {

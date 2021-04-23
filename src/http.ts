@@ -18,6 +18,24 @@ const asyncHttp = (options, payload) => {
   });
 };
 
+const asyncHttpUpload = (options, payload) => {
+  return new Promise((resolve, reject) => {
+    const req = http.request(options, (res) => {
+      let chunks = [];
+      res.on("data", (chunk) => chunks.push(chunk));
+      res.on("end", () => {
+        resolve({
+          data: Buffer.concat(chunks).toString("utf8"),
+          status: res.statusCode,
+        });
+      });
+      req.on("error", reject);
+    });
+    if (payload) req.write(payload);
+    req.end();
+  });
+};
+
 const builOptionsForUri = (server, uri) => ({
   host: server.host,
   port: server.port,
@@ -28,8 +46,23 @@ const builOptionsForUri = (server, uri) => ({
   },
 });
 
+const builOptionsForUriUpload = (server, uri) => ({
+  host: server.host,
+  port: server.port,
+  path: uri,
+  headers: {
+    "cache-control": "no-store",
+  },
+});
+
 export const getRequest = async (server, uri) =>
-  asyncHttp(Object.assign(builOptionsForUri(server, uri), { method: "GET" }));
+    asyncHttp(Object.assign(builOptionsForUri(server, uri), {method: "GET"}), false);
+
+export const postRequest = async (server, uri, payload) =>
+    asyncHttp(Object.assign(builOptionsForUri(server, uri), {method: "POST"}), payload);
+
+export const uploadRequest = async (server, uri, payload) =>
+    asyncHttpUpload(Object.assign(builOptionsForUriUpload(server, uri), {method: "POST"}), payload);
 
 
 export const throwIfNotEmpty = async (requestPromise) => {

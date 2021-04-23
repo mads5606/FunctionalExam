@@ -10,8 +10,11 @@ export class listCommand implements OrbitCommand {
     return true;
   }
 
-  run(model: OrbitModel, system: IOrbit) {
-    assert.strictEqual(model.validUsers, system.validUserList);
+  async run(model: OrbitModel, system: IOrbit) {
+    let out = await system.listFiles();
+    assert.strictEqual(out.status, 200);
+    assert.strictEqual(out.data["directoryVersions"].length, model.dirs.length);
+    assert.strictEqual(out.data["fileList"].length, model.files.length);
   }
 
   toString() {
