@@ -2,12 +2,9 @@ import fc from "fast-check";
 import {IOrbit} from "./Orbit";
 
 export class OrbitModel {
-  // rootFiles = [2];
   dirs: DirModel[] = [];
 
-  serverIsRunning = false;
   validUsers = [100, 101, 102];
-  // rootDirs = [15, 17, 18];
   files: FileModel[] = [];
 
   constructor() {

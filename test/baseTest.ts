@@ -3,11 +3,6 @@ import {OrbitCommands} from "../src/OrbitCommands";
 import {OrbitModel} from "../src/OrbitModel";
 import {OrbitImpl} from "../src/Orbit";
 
-const server = {
-    host: "localhost",
-    port: 8085,
-};
-
 // https://stackoverflow.com/questions/1880198/how-to-execute-shell-command-in-javascript
 const execSync = require('child_process').execSync;
 
@@ -23,36 +18,8 @@ function sleep(milliseconds) {
 
 const validUsers = [100, 101, 102];
 
-// describe("GET Test", () => {
-//   it("/file/list?userId=${USER_ID}", async () =>
-//     await fc.assert(
-//       fc.asyncProperty(fc.integer(0, 200), async (USER_ID) => {
-//           // console.log(USER_ID);
-//           // console.log(validUsers.includes(USER_ID));
-//           if (validUsers.includes(USER_ID)) {
-//               await throwIfHttpFailed(
-//                   getRequest(
-//                       server,
-//                       `/file/list?userId=${encodeURIComponent(USER_ID)}`
-//                   )
-//               );
-//           } else {
-//               await throwIfNotEmpty(
-//                   getRequest(
-//               server,
-//                 `/file/list?userId=${encodeURIComponent(USER_ID)}`
-//             )
-//           );
-//         }
-//       }),
-//         {timeout: 20000, numRuns: 90}
-//     ));
-// });
-
-
 test('model test', async () => {
-    const outputUp = execSync('docker-compose up -d --force-recreate', {encoding: 'utf-8'});  // the default is 'buffer'
-    // console.log('Output up was:\n', outputUp);
+    execSync('docker-compose up -d --force-recreate', {encoding: 'utf-8'});
     sleep(5000);
     let i = 1;
     await fc.assert(
@@ -66,7 +33,6 @@ test('model test', async () => {
         }),
         {numRuns: 3, endOnFailure: true, verbose: true}
     );
-    const outputDown = execSync('docker-compose down', {encoding: 'utf-8'});  // the default is 'buffer'
-    // console.log('Output down was:\n', outputDown);
+    execSync('docker-compose down', {encoding: 'utf-8'});
     sleep(5000);
 }, 20000);

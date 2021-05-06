@@ -14,7 +14,7 @@ export class createDirCommand implements OrbitCommand {
     const dir = model.dirs[this.dirIndex % model.dirs.length];
     const out = await system.createDir(dir.id, dir.version, this.name);
     assert.strictEqual(out.status, 200);
-    assert.strictEqual(out.data["name"], this.name + "dadsas");
+    assert.strictEqual(out.data["name"], this.name);
     model.dirs.push({
       id: out.data["id"],
       version: 1,

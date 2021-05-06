@@ -22,12 +22,7 @@ export interface IOrbit {
 }
 
 export class OrbitImpl implements IOrbit {
-  // private server = {
-  //   host: "localhost",
-  //   port: 8085,
-  // };
   private userId = 100;
-  private rootDirectoryId = 15;
 
   private validUsers: number[];
 

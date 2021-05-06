@@ -16,7 +16,6 @@ const nameArbitrary = fc.base64String(1, 12).map(s => s.split("/").join("a"));
 const indexArbitrary = fc.integer(0, 10000);
 
 export const OrbitCommands = [
-  // fc.constant(new createDirCommand()),
   fc.tuple(indexArbitrary, nameArbitrary).map(([dirIndex, name]) => new createDirCommand(dirIndex, name)),
   fc.tuple(indexArbitrary, nameArbitrary).map(([dirIndex, name]) => new createFileCommand(dirIndex, name)),
   // fc.constant(new deleteDirCommand()),
