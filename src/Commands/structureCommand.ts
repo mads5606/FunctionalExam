@@ -10,8 +10,10 @@ export class structureCommand implements OrbitCommand {
     return true;
   }
 
-  run(model: OrbitModel, system: IOrbit) {
-    assert.strictEqual(model.validUsers, system.validUserList);
+  async run(model: OrbitModel, system: IOrbit) {
+    let out = await system.listDirs();
+    assert.strictEqual(out.status, 200);
+    assert.strictEqual(out.data.length, model.dirs.length);
   }
 
   toString() {

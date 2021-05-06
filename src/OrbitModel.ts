@@ -27,6 +27,7 @@ export class OrbitModel {
   private seedDirs() {
     this.dirs.push({
       id: 15,
+      name: "",
       version: 1,
       parentId: 14,
       childDirs: [],
@@ -34,6 +35,7 @@ export class OrbitModel {
     });
     this.dirs.push({
       id: 17,
+      name: "",
       version: 1,
       parentId: 2,
       childDirs: [],
@@ -41,6 +43,7 @@ export class OrbitModel {
     });
     this.dirs.push({
       id: 18,
+      name: "",
       version: 1,
       parentId: 2,
       childDirs: [],
@@ -70,6 +73,7 @@ export interface FileModel {
 
 export interface DirModel {
   id: number;
+  name: string;
   version: number;
   parentId: number;
   childDirs: number[];

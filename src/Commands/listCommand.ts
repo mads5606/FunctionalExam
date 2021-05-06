@@ -13,7 +13,7 @@ export class listCommand implements OrbitCommand {
   async run(model: OrbitModel, system: IOrbit) {
     let out = await system.listFiles();
     assert.strictEqual(out.status, 200);
-    assert.strictEqual(out.data["directoryVersions"].length, model.dirs.length);
+    assert.strictEqual(out.data["directoryVersions"].length, 3);
     assert.strictEqual(out.data["fileList"].length, model.files.length);
   }
 
