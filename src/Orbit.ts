@@ -1,5 +1,5 @@
 import {RequestResponse} from "./RequestResponse";
-import {getRequest, postRequest, uploadRequest} from "./http";
+import {deleteRequest, getRequest, postRequest, uploadRequest} from "./http";
 
 export interface IOrbit {
   validUser(user: number): boolean;
@@ -13,6 +13,8 @@ export interface IOrbit {
   getFile(id: number): Promise<RequestResponse>;
 
   uploadFile(id: number, version: number, content: string): Promise<RequestResponse>;
+
+  deleteFile(id: number, version: number): Promise<RequestResponse>;
 }
 
 export class OrbitImpl implements IOrbit {
@@ -70,6 +72,14 @@ export class OrbitImpl implements IOrbit {
         this.server,
         `/file/upload?userId=${this.userId}&id=${id}&version=${version}&timestamp=${currentTime}`,
         content
+    ));
+    return {status: out.status, data: JSON.parse(out.data)};
+  }
+
+  async deleteFile(id: number, version: number): Promise<RequestResponse> {
+    const out: any = await (deleteRequest(
+        this.server,
+        `/file?userId=${this.userId}&id=${id}&version=${version}`
     ));
     return {status: out.status, data: JSON.parse(out.data)};
   }

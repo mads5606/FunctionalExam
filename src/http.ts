@@ -64,6 +64,9 @@ export const postRequest = async (server, uri, payload) =>
 export const uploadRequest = async (server, uri, payload) =>
     asyncHttpUpload(Object.assign(builOptionsForUriUpload(server, uri), {method: "POST"}), payload);
 
+export const deleteRequest = async (server, uri) =>
+    asyncHttpUpload(Object.assign(builOptionsForUri(server, uri), {method: "DELETE"}), false);
+
 
 export const throwIfNotEmpty = async (requestPromise) => {
   const out = await requestPromise;

@@ -3,15 +3,19 @@ import {IOrbit} from "../Orbit";
 import * as assert from "assert";
 
 export class deleteFileCommand implements OrbitCommand {
-  constructor() {
+  constructor(readonly fileIndex: number) {
   }
 
   check(model: OrbitModel) {
-    return true;
+    return model.files.length > 0;
   }
 
-  run(model: OrbitModel, system: IOrbit) {
-    assert.strictEqual(model.validUsers, system.validUserList);
+  async run(model: OrbitModel, system: IOrbit) {
+    const realIndex = this.fileIndex % model.files.length;
+    const file = model.files[realIndex];
+    const out = await system.deleteFile(file.id, file.version);
+    assert.strictEqual(out.status, 200);
+    model.files.splice(realIndex, 1);
   }
 
   toString() {

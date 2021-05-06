@@ -7,7 +7,7 @@ export class downloadCommand implements OrbitCommand {
   }
 
   check(model: OrbitModel) {
-    return true;
+    return model.files.length > 0;
   }
 
   async run(model: OrbitModel, system: IOrbit) {
