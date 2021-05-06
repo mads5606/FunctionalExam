@@ -3,6 +3,7 @@ import {IOrbit} from "./Orbit";
 
 export class OrbitModel {
   dirs: DirModel[] = [];
+  safeDirs = [17, 18, 15];
 
   validUsers = [100, 101, 102];
   files: FileModel[] = [];
@@ -13,11 +14,11 @@ export class OrbitModel {
   }
 
   findDirById(id: number): DirModel {
-    return this.dirs.find(f => f.id = id);
+    return this.dirs.find(f => f.id == id);
   }
 
   findFileById(id: number): FileModel {
-    return this.files.find(f => f.id = id);
+    return this.files.find(f => f.id == id);
   }
 
 

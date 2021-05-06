@@ -35,4 +35,4 @@ test('model test', async () => {
     );
     execSync('docker-compose down', {encoding: 'utf-8'});
     sleep(5000);
-}, 20000);
+}, 60000);

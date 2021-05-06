@@ -6,6 +6,7 @@ import {uploadFileCommand} from "./Commands/uploadFileCommand";
 import {deleteFileCommand} from "./Commands/deleteFileCommand";
 import {structureCommand} from "./Commands/structureCommand";
 import {createDirCommand} from "./Commands/createDirCommand";
+import {deleteDirCommand} from "./Commands/deleteDirCommand";
 
 // Removing "/" because it does not encode or decode correctly. Removing " also, because it is a lot harder to debug with that in JSON strings
 // split-join to "replaceAll"
@@ -18,7 +19,7 @@ const indexArbitrary = fc.integer(0, 10000);
 export const OrbitCommands = [
   fc.tuple(indexArbitrary, nameArbitrary).map(([dirIndex, name]) => new createDirCommand(dirIndex, name)),
   fc.tuple(indexArbitrary, nameArbitrary).map(([dirIndex, name]) => new createFileCommand(dirIndex, name)),
-  // fc.constant(new deleteDirCommand()),
+  indexArbitrary.map(v => new deleteDirCommand(v)),
   indexArbitrary.map(v => new deleteFileCommand(v)),
   indexArbitrary.map(v => new downloadCommand(v)),
   fc.constant(new listCommand()),

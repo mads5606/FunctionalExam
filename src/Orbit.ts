@@ -19,6 +19,8 @@ export interface IOrbit {
   listDirs(): Promise<RequestResponse>;
 
   createDir(parentId: number, parentVersion: number, name: string): Promise<RequestResponse>;
+
+  deleteDir(id: number, version: number): Promise<RequestResponse>;
 }
 
 export class OrbitImpl implements IOrbit {
@@ -97,6 +99,14 @@ export class OrbitImpl implements IOrbit {
         this.server,
         `/dir?userId=${this.userId}&parentId=${parentId}&name=${encodedName}&version=${parentVersion}`,
         false
+    ));
+    return {status: out.status, data: JSON.parse(out.data)};
+  }
+
+  async deleteDir(id: number, version: number): Promise<RequestResponse> {
+    const out: any = await (deleteRequest(
+        this.server,
+        `/dir?userId=${this.userId}&id=${id}&version=${version}`
     ));
     return {status: out.status, data: JSON.parse(out.data)};
   }
