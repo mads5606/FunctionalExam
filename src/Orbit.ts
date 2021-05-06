@@ -15,19 +15,23 @@ export interface IOrbit {
   uploadFile(id: number, version: number, content: string): Promise<RequestResponse>;
 
   deleteFile(id: number, version: number): Promise<RequestResponse>;
+
+  listDirs(): Promise<RequestResponse>;
+
+  createDir(parentId: number, parentVersion: number, name: string): Promise<RequestResponse>;
 }
 
 export class OrbitImpl implements IOrbit {
-  private server = {
-    host: "localhost",
-    port: 8085,
-  };
+  // private server = {
+  //   host: "localhost",
+  //   port: 8085,
+  // };
   private userId = 100;
   private rootDirectoryId = 15;
 
   private validUsers: number[];
 
-  constructor(validUsers: number[]) {
+  constructor(validUsers: number[], readonly server) {
     this.validUsers = validUsers;
   }
 
@@ -80,6 +84,24 @@ export class OrbitImpl implements IOrbit {
     const out: any = await (deleteRequest(
         this.server,
         `/file?userId=${this.userId}&id=${id}&version=${version}`
+    ));
+    return {status: out.status, data: JSON.parse(out.data)};
+  }
+
+  async listDirs(): Promise<RequestResponse> {
+    const out: any = await (getRequest(
+        this.server,
+        `/dir/structure?userId=${this.userId}`
+    ));
+    return {status: out.status, data: JSON.parse(out.data)};
+  }
+
+  async createDir(parentId: number, parentVersion: number, name: string): Promise<RequestResponse> {
+    const encodedName = encodeURIComponent(name);
+    const out: any = await (postRequest(
+        this.server,
+        `/dir?userId=${this.userId}&parentId=${parentId}&name=${encodedName}&version=${parentVersion}`,
+        false
     ));
     return {status: out.status, data: JSON.parse(out.data)};
   }
