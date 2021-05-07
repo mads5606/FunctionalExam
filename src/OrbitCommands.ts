@@ -7,6 +7,7 @@ import {deleteFileCommand} from "./Commands/deleteFileCommand";
 import {structureCommand} from "./Commands/structureCommand";
 import {createDirCommand} from "./Commands/createDirCommand";
 import {deleteDirCommand} from "./Commands/deleteDirCommand";
+import {setFileTimeCommand} from "./Commands/setFileTimeCommand";
 
 // Removing "/" because it does not encode or decode correctly. Removing " also, because it is a lot harder to debug with that in JSON strings
 // split-join to "replaceAll"
@@ -25,7 +26,7 @@ export const OrbitCommands = [
   fc.constant(new listCommand()),
   // fc.constant(new lockUnlockFileCommand()),
   // fc.constant(new metaCommand()),
-  // fc.constant(new setFileTimeCommand()),
+  indexArbitrary.map(v => new setFileTimeCommand(v)),
   fc.constant(new structureCommand()),
   fc.tuple(indexArbitrary, fc.base64String(0, 100)).map(([fileIndex, content]) => new uploadFileCommand(fileIndex, content)),
   // fc.constant(new versionCommand()),

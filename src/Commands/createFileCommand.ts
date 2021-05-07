@@ -19,7 +19,8 @@ export class createFileCommand implements OrbitCommand {
       version: 1,
       name: this.name,
       parentId: dir.id,
-      content: ""
+      content: "",
+      timestamp: out.data["timestamp"]
     });
     dir.childFiles.push(out.data["id"]);
   }

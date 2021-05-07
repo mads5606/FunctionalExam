@@ -3,15 +3,24 @@ import {IOrbit} from "../Orbit";
 import * as assert from "assert";
 
 export class setFileTimeCommand implements OrbitCommand {
-  constructor() {
+  constructor(readonly fileIndex: number) {
   }
 
   check(model: OrbitModel) {
-    return true;
+    return model.files.length > 0;
   }
 
-  run(model: OrbitModel, system: IOrbit) {
-    assert.strictEqual(model.validUsers, system.validUserList);
+  async run(model: OrbitModel, system: IOrbit) {
+    const realIndex = this.fileIndex % model.files.length;
+    const file = model.files[realIndex];
+    const timestamp = Math.floor(Date.now() / 1000);
+    const out = await system.updateTimestamp(file.id, file.version, timestamp);
+    assert.strictEqual(out.status, 200);
+    // 62135596800 is the difference in seconds between epoch and 1. january, 1 AD
+    const returnedTimestamp = Math.floor(out.data["timestamp"] / 10000000) - 62135596800;
+    assert.strictEqual(returnedTimestamp, timestamp);
+    file.timestamp = timestamp;
+    file.version++;
   }
 
   toString() {

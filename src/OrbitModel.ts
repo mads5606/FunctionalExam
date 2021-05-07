@@ -56,7 +56,8 @@ export class OrbitModel {
       parentId: 15,
       name: "README.txt",
       content: "README.txt located at /Users/rw/README.txt\n" +
-          "Only USER_ID=100 can access it.\n"
+          "Only USER_ID=100 can access it.\n",
+      timestamp: 0
     })
   }
 }
@@ -67,6 +68,7 @@ export interface FileModel {
   parentId: number;
   name: string;
   content: string;
+  timestamp: number;
 }
 
 export interface DirModel {
