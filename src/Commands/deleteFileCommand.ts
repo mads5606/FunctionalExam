@@ -16,6 +16,9 @@ export class deleteFileCommand implements OrbitCommand {
     const out = await system.deleteFile(file.id, file.version);
     assert.strictEqual(out.status, 200);
     model.files.splice(realIndex, 1);
+    const dir = model.findDirById(file.parentId);
+    const index = dir.childFiles.indexOf(file.id);
+    dir.childFiles.splice(index, 1);
   }
 
   toString() {

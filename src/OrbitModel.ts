@@ -29,7 +29,7 @@ export class OrbitModel {
       version: 1,
       parentId: 14,
       childDirs: [],
-      childFiles: [3]
+      childFiles: [2]
     });
     this.dirs.push({
       id: 17,

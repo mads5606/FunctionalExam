@@ -23,6 +23,10 @@ export interface IOrbit {
   deleteDir(id: number, version: number): Promise<RequestResponse>;
 
   updateTimestamp(id: number, version: number, timestamp: number): Promise<RequestResponse>;
+
+  metaCheckOnFileId(id: number): Promise<RequestResponse>;
+
+  metaCheckOnName(dirId: number, fileName: string): Promise<RequestResponse>;
 }
 
 export class OrbitImpl implements IOrbit {
@@ -118,6 +122,23 @@ export class OrbitImpl implements IOrbit {
         this.server,
         `/file/timestamp?userId=${this.userId}&id=${id}&version=${version}&timestamp=${timestamp}`,
         false
+    ));
+    return {status: out.status, data: JSON.parse(out.data)};
+  }
+
+  async metaCheckOnFileId(id: number): Promise<RequestResponse> {
+    const out: any = await (getRequest(
+        this.server,
+        `/file/meta?userId=${this.userId}&id=${id}`
+    ));
+    return {status: out.status, data: JSON.parse(out.data)};
+  }
+
+  async metaCheckOnName(dirId: number, fileName: string): Promise<RequestResponse> {
+    const encodedName = encodeURIComponent(fileName);
+    const out: any = await (getRequest(
+        this.server,
+        `/file/meta?userId=${this.userId}&parent_id=${dirId}&name=${encodedName}`
     ));
     return {status: out.status, data: JSON.parse(out.data)};
   }
